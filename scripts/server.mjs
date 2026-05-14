@@ -4,6 +4,7 @@ import { extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { calculateSettlementPlan, formatKakaoSettlementMessage } from "./settlement-runtime.mjs";
+import { calculateSettlementPlan, formatKakaoSettlementMessage } from "../dist/src/settlement/index.js";
 
 const rootDir = join(fileURLToPath(new URL("..", import.meta.url)));
 const publicDir = join(rootDir, "public");

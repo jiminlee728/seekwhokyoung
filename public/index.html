@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>식후경 P0 정산</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
     <main class="app-shell">
@@ -59,6 +60,7 @@
         <div class="section-header">
           <div>
             <span class="step-badge">4</span>
+            <span class="step-badge">3</span>
             <h2>차수와 비용</h2>
           </div>
           <button id="addRoundButton" type="button" class="ghost-button">+ 차수</button>
@@ -75,6 +77,7 @@
         <div class="section-header">
           <div>
             <span class="step-badge">5</span>
+            <span class="step-badge">4</span>
             <h2>정산 결과</h2>
           </div>
           <button id="copyMessageButton" type="button" class="ghost-button">복사</button>
@@ -113,9 +116,36 @@
           <button type="button" class="ghost-button add-expense">+ 결제 추가</button>
         </div>
         <div class="expenses-list"></div>
+        <div class="mini-title">참석자</div>
+        <div class="participant-chips"></div>
+        <div class="expense-grid">
+          <label>
+            총액
+            <input class="text-input expense-amount" inputmode="numeric" placeholder="98000" />
+          </label>
+          <label>
+            결제자
+            <select class="text-input payer-select"></select>
+          </label>
+          <label>
+            카테고리
+            <select class="text-input category-select">
+              <option value="food">음식</option>
+              <option value="alcohol">술</option>
+              <option value="activity">활동</option>
+              <option value="transport">이동</option>
+              <option value="other">기타</option>
+            </select>
+          </label>
+          <label>
+            할인/쿠폰
+            <input class="text-input discount-amount" inputmode="numeric" placeholder="0" />
+          </label>
+        </div>
       </article>
     </template>
 
     <script type="module" src="app.js"></script>
+    <script type="module" src="/app.js"></script>
   </body>
 </html>

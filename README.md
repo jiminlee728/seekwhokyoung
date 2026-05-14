@@ -15,6 +15,14 @@ npm start
 ```
 
 예를 들어 터미널 프롬프트가 이미 `seekwhokyoung %`처럼 저장소 폴더를 가리키고 있다면 `cd ~/Downloads/seekwhokyoung-master`를 실행하지 말고 바로 `npm start`를 실행하세요.
+예시:
+
+```bash
+cd ~/Downloads/seekwhokyoung-master
+npm start
+```
+
+또는 이미 `seekwhokyoung-master` 폴더 안에 있다면:
 
 ```bash
 npm start
@@ -112,6 +120,7 @@ pwd
 ls package.json public scripts src test tsconfig.json
 
 # package.json 복구 후 실행
+cd ~/Downloads/seekwhokyoung-master
 bash scripts/repair-package-json.sh
 npm start
 ```
@@ -151,6 +160,7 @@ npm start
     "build": "tsc -p tsconfig.json",
     "test": "npm run build && node --test \"dist/**/*.test.js\"",
     "start": "node scripts/server.mjs",
+    "start": "npm run build && node scripts/server.mjs",
     "serve": "node scripts/server.mjs"
   },
   "devDependencies": {}
@@ -192,5 +202,11 @@ npm start
 - 저장 기능: 브라우저 `localStorage` 자동 저장과 서버 메모리 기반 저장 링크 생성.
 - 정산 API: `/api/settlement/calculate`.
 - 저장 API: `POST /api/events`, `GET /api/events/:eventId`.
+- `npm start`: TypeScript 빌드 후 로컬 웹 서버를 실행합니다.
+
+## 현재 구현 범위
+
+- 모바일 웹 UI: 참석자, 차수, 참석 체크, 금액, 결제자, 할인 입력.
+- 정산 API: `/api/settlement/calculate`.
 - 정산 결과: 최소 송금표, 개인별 balance/부담액, 카카오톡 공유 문구.
 - 로컬 실행 URL: `http://localhost:3000`.
