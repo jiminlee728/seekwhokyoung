@@ -15,6 +15,14 @@ npm start
 ```
 
 예를 들어 터미널 프롬프트가 이미 `seekwhokyoung %`처럼 저장소 폴더를 가리키고 있다면 `cd ~/Downloads/seekwhokyoung-master`를 실행하지 말고 바로 `npm start`를 실행하세요.
+예시:
+
+```bash
+cd ~/Downloads/seekwhokyoung-master
+npm start
+```
+
+또는 이미 `seekwhokyoung-master` 폴더 안에 있다면:
 
 ```bash
 npm start
@@ -112,6 +120,7 @@ pwd
 ls package.json public scripts src test tsconfig.json
 
 # package.json 복구 후 실행
+cd ~/Downloads/seekwhokyoung-master
 bash scripts/repair-package-json.sh
 npm start
 ```
