@@ -131,6 +131,21 @@ npm start
 http://localhost:3000
 ```
 
+
+## `tsc: command not found`가 뜰 때
+
+이제 `npm start`는 TypeScript 컴파일러 없이 실행되도록 수정되어 있습니다. 즉, 로컬 데모 실행에는 `tsc` 설치가 필요 없습니다.
+
+```bash
+# package.json을 최신 실행 스크립트로 복구
+bash scripts/repair-package-json.sh
+
+# 빌드 없이 서버 실행
+npm start
+```
+
+`npm test`는 TypeScript 테스트용 명령이라서 로컬에 `tsc`가 없으면 실패할 수 있습니다. 데모 확인만 하려면 `npm start`만 사용하세요.
+
 ## 실행 전 확인
 
 `package.json`은 반드시 유효한 JSON이어야 합니다. 현재 저장소의 정상 `package.json`은 아래 형태입니다.
@@ -144,6 +159,7 @@ http://localhost:3000
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "npm run build && node --test \"dist/**/*.test.js\"",
+    "start": "node scripts/server.mjs",
     "start": "npm run build && node scripts/server.mjs",
     "serve": "node scripts/server.mjs"
   },
@@ -176,6 +192,16 @@ npm start
 ```
 
 - `npm test`: TypeScript 빌드와 자동 테스트를 실행합니다.
+- `npm start`: 별도 빌드 없이 로컬 웹 서버를 실행합니다.
+
+## 현재 구현 범위
+
+- 모바일 웹 UI: 참석자, 차수, 참석 체크, 금액, 복수 결제 내역, 결제자, 할인 입력.
+- 고급 부담 옵션: 참석자별 반만 부담, 0.25 부담, 수동 조정 금액, 술값 제외.
+- 일정 조율 UI: 후보 시간/장소, 참석자별 가능·애매·불가능, 선호도, 추천 Top 3, 시간 확정.
+- 저장 기능: 브라우저 `localStorage` 자동 저장과 서버 메모리 기반 저장 링크 생성.
+- 정산 API: `/api/settlement/calculate`.
+- 저장 API: `POST /api/events`, `GET /api/events/:eventId`.
 - `npm start`: TypeScript 빌드 후 로컬 웹 서버를 실행합니다.
 
 ## 현재 구현 범위

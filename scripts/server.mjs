@@ -3,11 +3,13 @@ import { readFile } from "node:fs/promises";
 import { extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { calculateSettlementPlan, formatKakaoSettlementMessage } from "./settlement-runtime.mjs";
 import { calculateSettlementPlan, formatKakaoSettlementMessage } from "../dist/src/settlement/index.js";
 
 const rootDir = join(fileURLToPath(new URL("..", import.meta.url)));
 const publicDir = join(rootDir, "public");
 const port = Number(process.env.PORT ?? 3000);
+const savedEvents = new Map();
 
 const contentTypes = {
   ".html": "text/html; charset=utf-8",
@@ -23,6 +25,17 @@ const server = createServer(async (request, response) => {
 
     if (request.method === "POST" && url.pathname === "/api/settlement/calculate") {
       await handleSettlementCalculation(request, response);
+      return;
+    }
+
+    if (request.method === "POST" && url.pathname === "/api/events") {
+      await handleEventSave(request, response);
+      return;
+    }
+
+    const eventMatch = url.pathname.match(/^\/api\/events\/([^/]+)$/);
+    if (request.method === "GET" && eventMatch) {
+      handleEventRead(eventMatch[1], response);
       return;
     }
 
@@ -46,6 +59,23 @@ async function handleSettlementCalculation(request, response) {
   const plan = calculateSettlementPlan(body);
   const message = formatKakaoSettlementMessage(body.eventTitle ?? "식후경 모임", body.participants, plan.transfers);
   sendJson(response, 200, { ...plan, message });
+}
+
+async function handleEventSave(request, response) {
+  const body = await readJsonBody(request);
+  const eventId = body.eventId ?? createEventId();
+  const savedAt = new Date().toISOString();
+  savedEvents.set(eventId, { ...body, eventId, savedAt });
+  sendJson(response, 200, { eventId, savedAt, url: `/public/index.html?eventId=${encodeURIComponent(eventId)}` });
+}
+
+function handleEventRead(eventId, response) {
+  const saved = savedEvents.get(decodeURIComponent(eventId));
+  if (!saved) {
+    sendJson(response, 404, { error: "Saved event not found. 로컬 서버 재시작 시 저장 링크는 초기화됩니다." });
+    return;
+  }
+  sendJson(response, 200, saved);
 }
 
 async function serveStatic(pathname, response) {
@@ -93,4 +123,8 @@ function readJsonBody(request) {
 function sendJson(response, statusCode, payload) {
   response.writeHead(statusCode, { "Content-Type": "application/json; charset=utf-8" });
   response.end(JSON.stringify(payload));
+}
+
+function createEventId() {
+  return `evt_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
 }

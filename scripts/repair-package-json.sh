@@ -10,6 +10,7 @@ cat > package.json <<'JSON'
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "npm run build && node --test \"dist/**/*.test.js\"",
+    "start": "node scripts/server.mjs",
     "start": "npm run build && node scripts/server.mjs",
     "serve": "node scripts/server.mjs"
   },

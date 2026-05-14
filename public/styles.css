@@ -191,3 +191,92 @@ pre { overflow: auto; white-space: pre-wrap; font-size: 12px; color: var(--muted
   .hero-actions, .expense-grid { grid-template-columns: 1fr; }
   h1 { font-size: 32px; }
 }
+
+.helper-text { margin-top: 12px; font-size: 13px; color: var(--muted); }
+.wide-action { grid-column: 1 / -1; }
+.saved-event-box {
+  margin-bottom: 12px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fffdfb;
+  color: var(--muted);
+  font-size: 13px;
+  word-break: break-all;
+}
+.saved-event-box a { color: var(--brand-dark); font-weight: 850; }
+.expense-section-title { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 14px; }
+.participant-option-card {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: white;
+}
+.check-line {
+  display: flex;
+  grid-template-columns: none;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+}
+.muted-check { margin-top: 8px; color: var(--muted); font-size: 13px; }
+.option-grid { display: grid; grid-template-columns: 0.8fr 1fr; gap: 8px; margin-top: 10px; }
+.expenses-list { display: grid; gap: 10px; }
+.expense-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 10px;
+  align-items: end;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: white;
+}
+.expense-row label:nth-child(3), .expense-row label:nth-child(4) { grid-column: span 1; }
+
+@media (max-width: 430px) {
+  .expense-row, .option-grid { grid-template-columns: 1fr; }
+  .expense-row .remove-expense { width: 100%; border-radius: 15px; }
+}
+
+.schedule-list, .recommendation-list, .availability-list { display: grid; gap: 10px; }
+.schedule-card, .recommendation-card {
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: #fffdfb;
+}
+.schedule-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 12px 0;
+}
+.availability-row {
+  display: grid;
+  grid-template-columns: 1fr 110px 110px;
+  gap: 8px;
+  align-items: center;
+  padding: 8px;
+  border-radius: 14px;
+  background: #fff8ef;
+}
+.recommendation-card {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+.recommendation-card div:first-child {
+  display: grid;
+  gap: 4px;
+}
+.recommendation-card span, .recommendation-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@media (max-width: 430px) {
+  .schedule-grid, .availability-row { grid-template-columns: 1fr; }
+}
