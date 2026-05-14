@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>식후경 P0 정산</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero-card">
+        <div class="eyebrow">식후경 P0 모바일 웹</div>
+        <h1>차수별 정산을<br />3분 안에 끝내기</h1>
+        <p>참석자, 1차/2차/n차, 결제 금액을 입력하면 최소 송금표와 카카오톡 공유 문구를 바로 생성합니다.</p>
+        <div class="hero-actions">
+          <button id="loadSampleButton" type="button" class="secondary-button">샘플 불러오기</button>
+          <button id="calculateTopButton" type="button" class="primary-button">정산 계산</button>
+          <button id="saveEventButton" type="button" class="secondary-button wide-action">저장/링크</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-header">
+          <div>
+            <span class="step-badge">1</span>
+            <h2>모임 기본 정보</h2>
+          </div>
+        </div>
+        <label class="field-label" for="eventTitle">모임 이름</label>
+        <input id="eventTitle" class="text-input" value="5월 정기 회식" />
+      </section>
+
+      <section class="panel">
+        <div class="section-header">
+          <div>
+            <span class="step-badge">2</span>
+            <h2>참석자</h2>
+          </div>
+          <button id="addParticipantButton" type="button" class="ghost-button">+ 추가</button>
+        </div>
+        <div id="participantsList" class="stack-list"></div>
+      </section>
+
+      <section class="panel">
+        <div class="section-header">
+          <div>
+            <span class="step-badge">2</span>
+            <h2>일정 조율</h2>
+          </div>
+          <button id="addSlotButton" type="button" class="ghost-button">+ 후보</button>
+        </div>
+        <p class="helper-text">참석자별 가능/애매/불가능과 선호도를 입력하면 추천 시간 Top 3를 계산합니다.</p>
+        <div id="slotsList" class="schedule-list"></div>
+        <button id="recommendTimeButton" type="button" class="secondary-button full-width">추천 시간 계산</button>
+        <div id="recommendationList" class="recommendation-list"></div>
+      </section>
+
+      <section class="panel">
+        <div class="section-header">
+          <div>
+            <span class="step-badge">4</span>
+            <h2>차수와 비용</h2>
+          </div>
+          <button id="addRoundButton" type="button" class="ghost-button">+ 차수</button>
+        </div>
+        <div id="roundsList" class="round-list"></div>
+        <p class="helper-text">참석자별로 반만 부담, 추가/차감, 술 제외를 설정할 수 있습니다.</p>
+      </section>
+
+      <section class="sticky-calculate">
+        <button id="calculateButton" type="button" class="primary-button full-width">최소 송금표 만들기</button>
+      </section>
+
+      <section id="resultPanel" class="panel result-panel" aria-live="polite">
+        <div class="section-header">
+          <div>
+            <span class="step-badge">5</span>
+            <h2>정산 결과</h2>
+          </div>
+          <button id="copyMessageButton" type="button" class="ghost-button">복사</button>
+        </div>
+        <div id="savedEventBox" class="saved-event-box" hidden></div>
+        <div id="resultSummary" class="result-summary empty">아직 계산 전입니다.</div>
+        <div id="transferList" class="transfer-list"></div>
+        <details class="details-card">
+          <summary>개인별 balance / 차수별 부담액 보기</summary>
+          <pre id="debugOutput"></pre>
+        </details>
+        <textarea id="shareMessage" class="share-message" readonly placeholder="카카오톡 공유 문구가 여기에 표시됩니다."></textarea>
+      </section>
+    </main>
+
+    <template id="participantTemplate">
+      <div class="participant-row">
+        <input class="text-input participant-name" placeholder="이름" />
+        <button type="button" class="icon-button remove-participant" aria-label="참석자 삭제">×</button>
+      </div>
+    </template>
+
+    <template id="roundTemplate">
+      <article class="round-card">
+        <div class="round-card-header">
+          <div>
+            <strong class="round-title"></strong>
+            <input class="text-input place-name" placeholder="장소 예: 고깃집" />
+          </div>
+          <button type="button" class="icon-button remove-round" aria-label="차수 삭제">×</button>
+        </div>
+        <div class="mini-title">참석자별 부담 옵션</div>
+        <div class="participant-chips"></div>
+        <div class="expense-section-title">
+          <div class="mini-title">결제 내역</div>
+          <button type="button" class="ghost-button add-expense">+ 결제 추가</button>
+        </div>
+        <div class="expenses-list"></div>
+      </article>
+    </template>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
